@@ -10,6 +10,7 @@ alias p="cd ~/projects"
 alias g="git"
 alias gcm="git commit -m"
 alias ga="git add ."
+alias gpo='git push -u origin'
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
