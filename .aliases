@@ -24,6 +24,10 @@ fi
 # list branches sorted by last modified
 alias b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
 
+
+# remove branches that have been merged
+alias cleanmerge =" !git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d"
+
 # List all files colorized in long format
 alias l="ls -lF ${colorflag}"
 
