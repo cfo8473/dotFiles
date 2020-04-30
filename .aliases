@@ -13,6 +13,18 @@ alias ga="git add ."
 alias gpo="git push -u origin"
 alias dev="cd Users/A/Desktop/all/dev"
 
+alias gcc='gcc-6'
+alias g++='g++-6'
+alias tar='gtar'
+alias python='python3'
+alias pip='pip3'
+# Shortcuts to vimrc and bashrc
+alias vimrc='vim ~/.vimrc'
+alias bashrc='vim ~/.bash_profile'
+alias loadbash='source ~/.bash_profile'
+# Ctags.
+alias gentags='ctags -R .'
+
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"
