@@ -18,6 +18,102 @@ shopt -s histappend;
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell;
 
+# https://gist.github.com/vitalybe/021d2aecee68178f3c52
+#
+# Open new Terminal tabs from the command line
+#
+# Author: Justin Hileman (http://justinhileman.com)
+#
+# Installation:
+#     Add the following function to your `.bashrc` or `.bash_profile`,
+#     or save it somewhere (e.g. `~/.tab.bash`) and source it in `.bashrc`
+#
+# Usage:
+#     tab                   Opens the current directory in a new tab
+#     tab [PATH]            Open PATH in a new tab
+#     tab [CMD]             Open a new tab and execute CMD
+#     tab [PATH] [CMD] ...  You can prob'ly guess
+
+
+function iterm_newtab () {
+  [ "$(uname -s)" != "Darwin" ] && return # Only for Mac users
+  local cmd=""
+  local cdto="$PWD"
+  local args="$@"
+
+  if [ -d "$1" ]; then
+    cdto="$(cd "$1"; pwd)"
+    args="${@:2}"
+  fi
+
+  if [ -n "$args" ]; then
+    cmd="; $args"
+  fi
+
+  osascript &>/dev/null <<EOF
+    tell application "iTerm"
+      tell current window
+        set newTab to (create tab with default profile)
+        tell newTab
+          tell current session
+            write text "cd \"$cdto\"$cmd"
+          end tell
+        end tell
+      end tell
+    end tell
+EOF
+}
+
+function iterm_current () {
+  [ "$(uname -s)" != "Darwin" ] && return # Only for Mac users
+  local cmd="$1"
+  osascript &>/dev/null <<EOF
+    tell application "iTerm2"
+      tell current tab of current window
+        tell current session
+          write text "$cmd"
+        end tell
+      end tell
+    end tell
+EOF
+}
+
+function iterm_newpane () {
+  [ "$(uname -s)" != "Darwin" ] && return # Only for Mac users
+  local cmd="$1"
+  local direction=${2:-horizontally}
+  local should_focus=${3:-focus}
+  local select_cmd="select"
+  if [ "$should_focus" = "nofocus" ]; then
+    select_cmd=""
+  fi
+  osascript &>/dev/null <<EOF
+    tell application "iTerm2"
+      tell current tab of current window
+        tell current session
+          set newSession to (split $direction with same profile)
+        end tell
+        tell newSession
+          write text "$cmd"
+          $select_cmd
+        end tell
+      end tell
+    end tell
+EOF
+}
+
+function iterm_newwindow () {
+  [ "$(uname -s)" != "Darwin" ] && return # Only for Mac users
+  osascript &>/dev/null <<EOF
+    tell application "iTerm2"
+      set newWindow to (create window with default profile)
+      tell newWindow
+        select
+      end tell
+    end tell
+EOF
+}
+
 # Enable some Bash 4 features when possible:
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
