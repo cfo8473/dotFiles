@@ -64,19 +64,7 @@ function iterm_newtab () {
 EOF
 }
 
-function iterm_current () {
-  [ "$(uname -s)" != "Darwin" ] && return # Only for Mac users
-  local cmd="$1"
-  osascript &>/dev/null <<EOF
-    tell application "iTerm2"
-      tell current tab of current window
-        tell current session
-          write text "$cmd"
-        end tell
-      end tell
-    end tell
-EOF
-}
+
 
 function iterm_newpane () {
   [ "$(uname -s)" != "Darwin" ] && return # Only for Mac users
