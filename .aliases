@@ -12,6 +12,11 @@ alias gcm="git commit -m"
 alias ga="git add ."
 alias gpo="git push -u origin"
 alias dev="cd Users/A/Desktop/all/dev"
+alias g=git
+alias gk='gitk &'
+alias gka='gitk --all &'
+alias gd='git diff'
+alias gdc='git diff --cached'
 
 alias gcc='gcc-6'
 alias g++='g++-6'
