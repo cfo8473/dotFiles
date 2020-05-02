@@ -65,31 +65,6 @@ EOF
 }
 
 
-
-function iterm_newpane () {
-  [ "$(uname -s)" != "Darwin" ] && return # Only for Mac users
-  local cmd="$1"
-  local direction=${2:-horizontally}
-  local should_focus=${3:-focus}
-  local select_cmd="select"
-  if [ "$should_focus" = "nofocus" ]; then
-    select_cmd=""
-  fi
-  osascript &>/dev/null <<EOF
-    tell application "iTerm2"
-      tell current tab of current window
-        tell current session
-          set newSession to (split $direction with same profile)
-        end tell
-        tell newSession
-          write text "$cmd"
-          $select_cmd
-        end tell
-      end tell
-    end tell
-EOF
-}
-
 function iterm_newwindow () {
   [ "$(uname -s)" != "Darwin" ] && return # Only for Mac users
   osascript &>/dev/null <<EOF
