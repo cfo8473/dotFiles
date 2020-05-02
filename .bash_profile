@@ -64,7 +64,6 @@ function iterm_newtab () {
 EOF
 }
 
-
 function iterm_newwindow () {
   [ "$(uname -s)" != "Darwin" ] && return # Only for Mac users
   osascript &>/dev/null <<EOF
